@@ -1,75 +1,79 @@
-import { Mail, Linkedin, Instagram, Twitter } from 'lucide-react'
+import { Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="bg-secondary/5 border-t border-accent/20 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">B</span>
+    <footer className="bg-foreground text-white pt-24 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+          <div className="space-y-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
+                <span className="text-white font-black text-xl">B</span>
               </div>
-              <span className="text-lg font-semibold text-foreground">Burak Ima</span>
+              <span className="text-2xl font-bold tracking-tight">Burak Ima</span>
             </div>
-            <p className="text-secondary text-sm">
-              Leading the future of influencer marketing through authentic partnerships.
+            <p className="text-white/60 leading-relaxed text-lg">
+              Empowering brands through authentic influencer partnerships and data-driven marketing strategies.
             </p>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Services</h4>
-            <ul className="space-y-3 text-sm text-secondary">
-              <li><a href="#services" className="hover:text-foreground transition">Influencer Partnerships</a></li>
-              <li><a href="#services" className="hover:text-foreground transition">Campaign Strategy</a></li>
-              <li><a href="#services" className="hover:text-foreground transition">Performance Optimization</a></li>
-              <li><a href="#services" className="hover:text-foreground transition">Content Creation</a></li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Company</h4>
-            <ul className="space-y-3 text-sm text-secondary">
-              <li><a href="#about" className="hover:text-foreground transition">About Us</a></li>
-              <li><a href="#" className="hover:text-foreground transition">Blog</a></li>
-              <li><a href="#" className="hover:text-foreground transition">Careers</a></li>
-              <li><a href="#" className="hover:text-foreground transition">Press</a></li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
-            <div className="space-y-4">
-              <a href="mailto:hello@burakima.com" className="flex items-center gap-2 text-sm text-secondary hover:text-foreground transition">
-                <Mail size={16} />
-                hello@burakima.com
-              </a>
-              <div className="flex gap-4">
-                <a href="#" className="text-secondary hover:text-accent transition">
-                  <Instagram size={20} />
+            <div className="flex gap-4">
+              {[Twitter, Instagram, Linkedin].map((Icon, i) => (
+                <a key={i} href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent hover:text-white transition duration-300">
+                  <Icon size={20} />
                 </a>
-                <a href="#" className="text-secondary hover:text-accent transition">
-                  <Twitter size={20} />
-                </a>
-                <a href="#" className="text-secondary hover:text-accent transition">
-                  <Linkedin size={20} />
-                </a>
-              </div>
+              ))}
             </div>
+          </div>
+
+          <div>
+            <h4 className="text-xl font-bold mb-8">Quick Links</h4>
+            <ul className="space-y-4">
+              {['Services', 'About Us', 'Campaigns', 'Contact'].map((link) => (
+                <li key={link}>
+                  <a href={`#${link.toLowerCase().replace(' ', '-')}`} className="text-white/60 hover:text-accent transition text-lg">
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xl font-bold mb-8">Services</h4>
+            <ul className="space-y-4">
+              {['Influencer Search', 'Strategy Development', 'Content Creation', 'Analytics'].map((service) => (
+                <li key={service}>
+                  <a href="#services" className="text-white/60 hover:text-accent transition text-lg">
+                    {service}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xl font-bold mb-8">Contact Us</h4>
+            <ul className="space-y-6">
+              <li className="flex items-start gap-4 text-white/60">
+                <MapPin className="text-accent shrink-0" size={24} />
+                <span className="text-lg">123 Marketing Ave, Digital City, 10101</span>
+              </li>
+              <li className="flex items-center gap-4 text-white/60">
+                <Phone className="text-accent shrink-0" size={24} />
+                <span className="text-lg">+1 (555) 000-0000</span>
+              </li>
+              <li className="flex items-center gap-4 text-white/60">
+                <Mail className="text-accent shrink-0" size={24} />
+                <span className="text-lg">hello@burakima.com</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-accent/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
-          <p>&copy; 2024 Burak Ima. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-foreground transition">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground transition">Terms of Service</a>
-            <a href="#" className="hover:text-foreground transition">Cookies</a>
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 text-white/40">
+          <p className="text-lg">© {new Date().getFullYear()} Burak Ima. All rights reserved.</p>
+          <div className="flex gap-8 text-lg">
+            <a href="#" className="hover:text-white transition">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition">Terms of Service</a>
           </div>
         </div>
       </div>
