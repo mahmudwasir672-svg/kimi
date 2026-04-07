@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "SheetMail Sender",
+    "slug": "sheetmail-sender",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#3B82F6"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.sheetmailsender",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.yourcompany.sheetmailsender",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#3B82F6"
+      },
+      "permissions": [
+        "INTERNET"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.703407072044-0mboq4rqclqson724aq10fb56torrraa"
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      },
+      "firebase": {
+        "apiKey": "YOUR_FIREBASE_API_KEY",
+        "authDomain": "YOUR_PROJECT_ID.firebaseapp.com",
+        "projectId": "YOUR_PROJECT_ID",
+        "storageBucket": "YOUR_PROJECT_ID.appspot.com",
+        "messagingSenderId": "YOUR_MESSAGING_SENDER_ID",
+        "appId": "YOUR_APP_ID"
+      },
+      "googleOAuth": {
+        "iosClientId": "703407072044-0mboq4rqclqson724aq10fb56torrraa.apps.googleusercontent.com",
+        "androidClientId": "YOUR_ANDROID_CLIENT_ID.apps.googleusercontent.com",
+        "webClientId": "703407072044-0mboq4rqclqson724aq10fb56torrraa.apps.googleusercontent.com"
+      }
+    },
+    "scheme": "sheetmail"
+  }
+}

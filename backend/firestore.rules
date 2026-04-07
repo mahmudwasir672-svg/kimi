@@ -1,0 +1,146 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ============================================================================
+    // HELPER FUNCTIONS
+    // ============================================================================
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user is the owner of the document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Check if user owns the campaign
+    function ownsCampaign(campaignId) {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/campaigns/$(campaignId)).data.userId == request.auth.uid;
+    }
+    
+    // ============================================================================
+    // USERS COLLECTION
+    // ============================================================================
+    
+    match /users/{userId} {
+      // Users can only read/write their own document
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId);
+      allow delete: if false; // Never allow deletion
+      
+      // Validate required fields
+      allow write: if isOwner(userId) &&
+        request.resource.data.keys().hasAll(['uid', 'email']) &&
+        request.resource.data.uid == userId;
+    }
+    
+    // ============================================================================
+    // CAMPAIGNS COLLECTION
+    // ============================================================================
+    
+    match /campaigns/{campaignId} {
+      // Users can read their own campaigns
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Users can create campaigns for themselves
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      
+      // Users can update their own campaigns
+      allow update: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid;
+      
+      // Users can delete their own campaigns
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // ============================================================================
+    // RECIPIENTS SUBCOLLECTION
+    // ============================================================================
+    
+    match /campaigns/{campaignId}/recipients/{recipientId} {
+      // Users can read recipients of their campaigns
+      allow read: if ownsCampaign(campaignId);
+      
+      // Users can create recipients for their campaigns
+      allow create: if ownsCampaign(campaignId);
+      
+      // Users can update recipients of their campaigns
+      allow update: if ownsCampaign(campaignId);
+      
+      // Users can delete recipients of their campaigns
+      allow delete: if ownsCampaign(campaignId);
+    }
+    
+    // ============================================================================
+    // PROGRESS SUBCOLLECTION
+    // ============================================================================
+    
+    match /campaigns/{campaignId}/progress/{progressId} {
+      // Users can read progress of their campaigns
+      allow read: if ownsCampaign(campaignId);
+      
+      // Only backend can write progress
+      allow write: if false;
+    }
+    
+    // ============================================================================
+    // TEMPLATES COLLECTION
+    // ============================================================================
+    
+    match /templates/{templateId} {
+      // Users can read their own templates
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Users can create templates for themselves
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      
+      // Users can update their own templates
+      allow update: if isAuthenticated() && 
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid;
+      
+      // Users can delete their own templates
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // ============================================================================
+    // ANALYTICS COLLECTION (Read-only for users)
+    // ============================================================================
+    
+    match /analytics/{document=**} {
+      // Only backend can write analytics
+      allow write: if false;
+      
+      // Users can read their own analytics
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // ============================================================================
+    // RATE LIMITING COLLECTION
+    // ============================================================================
+    
+    match /rateLimits/{userId} {
+      // Users can only read their own rate limit data
+      allow read: if isOwner(userId);
+      
+      // Only backend can write rate limits
+      allow write: if false;
+    }
+    
+    // ============================================================================
+    // DEFAULT DENY
+    // ============================================================================
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

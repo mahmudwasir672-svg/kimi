@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+
+# Compiled JavaScript files
+lib/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+firebase-debug.log*
+firebase-debug.*.log*
+
+# Firebase cache
+.firebase/
+
+# Firebase config (don't commit if contains secrets)
+.runtimeconfig.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+
+# Service account keys
+serviceAccountKey.json
+*service-account*.json
+
+# Coverage
+coverage/
+
+# Build artifacts
+dist/
+build/
